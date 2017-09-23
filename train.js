@@ -66,7 +66,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   console.log(frequency);
 
   
-  var trainStartConverted = moment(trainStart, "HH:mm");
+  var trainStartConverted = moment(time, "HH:mm");
 
   console.log("Train Start:" + trainStartConverted);
 
@@ -84,13 +84,12 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log("REMAINDER: "+time);
 
     //frequency minus remainder to give minutes till next train
-    var minutesAway = frequency - time;
+    var minutesAway = frequency - timeRemainder;
     console.log("MINUTES AWAY: " + minutesAway);
-
 
     if(time<0){
       var nextTrainMinutes = moment(trainStartConverted).diff(moment(), "minutes");
-      var nextTrainArrival = trainStart;
+      var nextTrainArrival = time;
     }else{
 
     //Next train arrival time
@@ -101,7 +100,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
     // Add each train's data into the table
     $("#employee-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" +
-    trainFrequency + "</td><td>" + nextTrainArrival + "</td><td>" + minutesAway + "</td></tr>");
+    frequency + "</td><td>" + nextTrainArrival + "</td><td>" + minutesAway + "</td></tr>");
   });
 
 
